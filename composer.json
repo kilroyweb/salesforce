@@ -1,0 +1,14 @@
+{
+    "name": "kilroyweb/salesforce",
+    "description": "Salesforce Helper",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "davispeixoto/force-dot-com-toolkit-for-php": "dev-master"
+    },
+    "autoload":{
+        "psr-4": {
+            "KilroyWeb\\Salesforce\\": "src"
+        }
+    }
+}
