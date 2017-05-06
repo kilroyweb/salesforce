@@ -3,6 +3,7 @@
 namespace KilroyWeb\Salesforce\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use KilroyWeb\Salesforce\Salesforce;
 
 class SalesforceServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,20 @@ class SalesforceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerSalesforce();
     }
+
+    public function registerSalesforce(){
+        $this->app->bind('salesforce',function() {
+            return new Salesforce();
+        });
+    }
+
+    public function provides()
+    {
+        return array('salesforce', 'KilroyWeb\Salesforce');
+    }
+
+
+
 }
