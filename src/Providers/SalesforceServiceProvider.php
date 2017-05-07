@@ -21,7 +21,7 @@ class SalesforceServiceProvider extends ServiceProvider
         }
         //
         $this->publishes([
-            __DIR__.'/../Configuration/Templates/salesforce.php' => config_path('salesforce.php')
+            __DIR__.'/../Configuration/salesforce.php' => config_path('salesforce.php')
         ], 'config');
     }
 
