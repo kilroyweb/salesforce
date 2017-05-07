@@ -15,6 +15,15 @@ class Object{
         }
     }
 
+    public function formattedDate($field,$format){
+        $dateValue = $this->$field;
+        if(!empty($dateValue)){
+            $date = \Carbon\Carbon::parse($dateValue);
+            return $date->format($format);
+        }
+        return null;
+    }
+
     public function __get($property) {
         if (property_exists($this, $property)) {
             return $this->$property;
