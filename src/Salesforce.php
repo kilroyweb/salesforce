@@ -42,7 +42,7 @@ class Salesforce
     public function getObjectFields(){
         $parser = new WSDLParser();
         $wsdlFields = $parser
-            ->setPath(storage_path($this->wsdlPath))
+            ->setPath(base_path($this->wsdlPath))
             ->parseFieldsForType($this->objectName);
         $fields = [];
         $fields[] = new Field(['name'=>'Id','type'=>'id']);
@@ -70,6 +70,11 @@ class Salesforce
             return $records->first();
         }
         return null;
+    }
+
+    public function where($field,$operator,$value){
+        $this->filterArray[$field] = $value;
+        return $this;
     }
 
     public function get($attributes=[]){

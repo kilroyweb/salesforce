@@ -15,7 +15,7 @@ class Salesforce extends BaseClient {
 
     public function createConnection(){
         $this->connection = new SforceEnterpriseClient();
-        $this->connection->createConnection(storage_path($this->credentials['wsdlPath']));
+        $this->connection->createConnection(base_path($this->credentials['wsdlPath']));
         try{
             $this->connection->login(
                 $this->credentials['username'],
