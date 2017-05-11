@@ -90,6 +90,12 @@ class Salesforce
         $queryResult = $this->client->query($sql);
         return $this->collectionOfObjects($queryResult->records);
     }
+    
+    public function query($sql){
+        $instance = static::init();
+        $queryResult = $instance->client->query($sql);
+        return $instance->collectionOfObjects($queryResult->records);
+    }
 
     public function collectionOfObjects($array){
         $objects = collect();
