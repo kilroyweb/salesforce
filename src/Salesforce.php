@@ -32,6 +32,64 @@ class Salesforce
         return $instance;
     }
 
+    private function getCreatableFields($attributes=[]){
+        $returnFields = [];
+        $fields = collect($this->fields);
+        if(!empty($attributes)) {
+            foreach ($attributes as $attributeName=>$attributeValue) {
+                $field = $fields->where('name',$attributeName)->first();
+                if($field && $field->creatable){
+                    $field->setValue($attributeValue);
+                    $returnFields[$field->name] = $field->value;
+                }
+            }
+        }
+        return $returnFields;
+    }
+
+    private function getUpdatableFields($attributes=[]){
+        $returnFields = [];
+        $fields = collect($this->fields);
+        if(!empty($attributes)) {
+            foreach ($attributes as $attributeName=>$attributeValue) {
+                $field = $fields->where('name',$attributeName)->first();
+                if($field && $field->updatable){
+                    $field->setValue($attributeValue);
+                    $returnFields[$field->name] = $field->value;
+                }
+            }
+        }
+        return $returnFields;
+    }
+
+    public static function create($objectName, array $attributes = []){
+        $instance = static::init();
+        $instance->setObjectName($objectName);
+        $instance->getObjectFields();
+        $attributes = $instance->getCreatableFields($attributes);
+        $response = $instance->client->getConnection()->create([$attributes], $objectName);
+        return $response;
+    }
+
+    public static function update($objectName, $objectId, array $attributes = []){
+        $instance = static::init();
+        if(empty($objectId)){
+            abort(500,'No Id Given');
+        }
+        $attributes['Id'] = $objectId;
+        $attributes = $instance->getUpdatableFields($attributes);
+        $response = $instance->client->getConnection()->update([$attributes], $objectName);
+        return $response;
+    }
+
+    public static function delete($objectName, $objectId){
+        $instance = static::init();
+        if(empty($objectId)){
+            abort(500,'No Id Given');
+        }
+        //TODO
+    }
+
     public static function object($objectName){
         $instance = static::init();
         $instance->setObjectName($objectName);

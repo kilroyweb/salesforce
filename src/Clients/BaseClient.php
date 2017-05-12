@@ -11,4 +11,8 @@ abstract class BaseClient{
         $this->credentials = $credentials;
     }
 
+    public function getConnection(){
+        return $this->connection;
+    }
+
 }
