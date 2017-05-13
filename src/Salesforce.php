@@ -17,6 +17,7 @@ class Salesforce
     private $selectableFields;
     private $selectArray = [];
     private $filterArray = [];
+    private $limit = 2000;
 
     public static function init(){
         $instance = new static;
@@ -134,6 +135,11 @@ class Salesforce
         $this->filterArray[$field] = $value;
         return $this;
     }
+    
+    public function limit($limit){
+        $this->limit = $limit;
+        return $this;
+    }
 
     public function get($attributes=[]){
         $this->setQueryAttributes($attributes);
@@ -141,9 +147,7 @@ class Salesforce
         $query->table($this->objectName);
         $query->select($this->getSelectForQuery());
         $query->where($this->getFiltersForQuery());
-        if(isset($attributes['limit'])){
-            $query->limit($attributes['limit']);
-        }
+        $query->limit($this->limit);
         $sql = $query->generate();
         $queryResult = $this->client->query($sql);
         return $this->collectionOfObjects($queryResult->records);
@@ -170,6 +174,9 @@ class Salesforce
         }
         if(isset($attributes['filters'])){
             $this->filterArray = $attributes['filters'];
+        }
+        if(isset($attributes['limit'])){
+            $this->limit = $attributes['limit'];
         }
     }
 
