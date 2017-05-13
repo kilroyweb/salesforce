@@ -77,8 +77,8 @@ class Salesforce
         if(empty($objectId)){
             abort(500,'No Id Given');
         }
-        $attributes['Id'] = $objectId;
         $attributes = $instance->getUpdatableFields($attributes);
+        $attributes['Id'] = $objectId;
         $response = $instance->client->getConnection()->update([$attributes], $objectName);
         return $response;
     }
