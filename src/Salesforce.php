@@ -140,6 +140,11 @@ class Salesforce
         $this->limit = $limit;
         return $this;
     }
+    
+    public function select($fields){
+        $this->selectArray = $fields;
+        return $this;
+    }
 
     public function get($attributes=[]){
         $this->setQueryAttributes($attributes);
