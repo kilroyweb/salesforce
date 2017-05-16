@@ -63,6 +63,38 @@ class Salesforce
         return $returnFields;
     }
 
+    public static function describe($objectName){
+        $instance = static::init();
+        $response = $instance->client->getConnection()->describeSObject($objectName);
+        $object = new Object($response);
+        return $object;
+    }
+
+    public static function objectField($objectName, $fieldName){
+        $instance = static::init();
+        $description = static::describe($objectName);
+        if(!empty($description->fields)){
+            foreach($description->fields as $field){
+                if($field->name == $fieldName){
+                    return $field;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static function pickList($objectName, $fieldName){
+        $instance = static::init();
+        $field = static::objectField($objectName,$fieldName);
+        $items = [];
+        if($field){
+            foreach($field->picklistValues as $picklistValue){
+                $items[] = $picklistValue;
+            }
+        }
+        return $instance->collectionOfObjects($items);
+    }
+
     public static function create($objectName, array $attributes = []){
         $instance = static::init();
         $instance->setObjectName($objectName);
@@ -202,4 +234,5 @@ class Salesforce
         }
         return [];
     }
+
 }
