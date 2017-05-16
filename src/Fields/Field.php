@@ -55,6 +55,7 @@ class Field
             'dateTime',
             'date',
             'double',
+            'base64Binary',
         ];
         if (in_array($this->type, $selectableTypes)) {
             $this->selectable = true;
@@ -70,6 +71,7 @@ class Field
             'dateTime',
             'date',
             'double',
+            'base64Binary',
         ];
         if (in_array($this->type, $types)) {
             $this->filterable = true;
