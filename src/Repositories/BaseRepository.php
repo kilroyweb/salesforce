@@ -30,4 +30,14 @@ abstract class BaseRepository{
         return \Salesforce::delete($instance->objectName,$objectId);
     }
 
+    public static function describe(){
+        $instance = new static;
+        return \Salesforce::describe($instance->objectName);
+    }
+
+    public static function pickList($fieldName){
+        $instance = new static;
+        return \Salesforce::pickList($instance->objectName,$fieldName);
+    }
+
 }
