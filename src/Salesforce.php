@@ -106,6 +106,8 @@ class Salesforce
 
     public static function update($objectName, $objectId, array $attributes = []){
         $instance = static::init();
+        $instance->setObjectName($objectName);
+        $instance->getObjectFields();
         if(empty($objectId)){
             abort(500,'No Id Given');
         }
