@@ -236,5 +236,10 @@ class Salesforce
         }
         return [];
     }
+    
+    public function call(){
+        $instance = static::init();
+        return $instance->client->getConnection();
+    }
 
 }
