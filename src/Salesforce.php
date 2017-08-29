@@ -95,22 +95,24 @@ class Salesforce
         return $instance->collectionOfObjects($items);
     }
 
-    public static function create($objectName, array $attributes = []){
+    public static function create($objectName, $attributes = []){
         $instance = static::init();
         $instance->setObjectName($objectName);
         $instance->getObjectFields();
+        $attributes = (array) $attributes;
         $attributes = $instance->getCreatableFields($attributes);
         $response = $instance->client->getConnection()->create([$attributes], $objectName);
         return $response;
     }
 
-    public static function update($objectName, $objectId, array $attributes = []){
+    public static function update($objectName, $objectId, $attributes = []){
         $instance = static::init();
         $instance->setObjectName($objectName);
         $instance->getObjectFields();
         if(empty($objectId)){
             abort(500,'No Id Given');
         }
+        $attributes = (array) $attributes;
         $attributes = $instance->getUpdatableFields($attributes);
         $attributes['Id'] = $objectId;
         $response = $instance->client->getConnection()->update([$attributes], $objectName);
