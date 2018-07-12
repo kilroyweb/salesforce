@@ -3,7 +3,7 @@
 namespace KilroyWeb\Salesforce;
 
 use KilroyWeb\Salesforce\Fields\Field;
-use KilroyWeb\Salesforce\Objects\Object;
+use KilroyWeb\Salesforce\Objects\BaseObject;
 use KilroyWeb\Salesforce\Parsers\WSDLParser;
 use KilroyWeb\Salesforce\QueryBuilders\SalesforceQueryBuilder;
 
@@ -66,7 +66,7 @@ class Salesforce
     public static function describe($objectName){
         $instance = static::init();
         $response = $instance->client->getConnection()->describeSObject($objectName);
-        $object = new Object($response);
+        $object = new BaseObject($response);
         return $object;
     }
 
@@ -203,7 +203,7 @@ class Salesforce
     public function collectionOfObjects($array){
         $objects = collect();
         foreach($array as $arrayItem){
-            $object = new Object($arrayItem);
+            $object = new BaseObject($arrayItem);
             $objects->push($object);
         }
         return $objects;
