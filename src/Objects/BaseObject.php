@@ -2,7 +2,7 @@
 
 namespace KilroyWeb\Salesforce\Objects;
 
-class Object{
+class BaseObject{
 
     public function __construct($attributes = [])
     {
